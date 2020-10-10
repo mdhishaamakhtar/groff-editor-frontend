@@ -18,7 +18,7 @@ import { useTheme } from "../context/ThemeContext";
 
 import socketIOClient from "socket.io-client";
 
-const client = socketIOClient(`${url.url}`, {
+const client = socketIOClient(`${url.wssurl}`, {
 	transports: ["websocket"],
 	path: "/api/socket.io"
 });
@@ -94,6 +94,7 @@ class Editor extends React.Component {
 		console.log(CurrentDoc);
 		this.update = setInterval(() => {
 			if (this.state.Modified) {
+				console.log(JSON.stringify(this.state.Output));
 				client.emit("cmd", JSON.stringify(this.state.Output));
 				this.setState({ Modified: false });
 				console.log(this.state.Output);
